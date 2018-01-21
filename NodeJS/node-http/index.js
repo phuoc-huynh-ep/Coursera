@@ -1,10 +1,11 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-
+const bodyParser = require('body-parser');
 const hostname = 'localhost';
 const port = 3000;
 
+app.use(bodyParser.json());
 const server = http.createServer((req, res) => {
     console.log('Request for ' + req.url + ' by method ' + req.method);
   
