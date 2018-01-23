@@ -1,5 +1,5 @@
 <div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.gt-md="space-around center"
-  fxLayoutGap="10px" fxLayoutGap.xs="0">
+  fxLayoutGap="10px" fxLayoutGap.xs="0" *ngIf="dish">
 
   <div fxFlex="40">
     <md-card>
@@ -20,7 +20,7 @@
     </md-card>
   </div>
 
-  <div fxFlex="40" *ngIf="dish">
+  <div fxFlex="40">
     <h3>Comments</h3>
     <md-list *ngFor="let item of dish.comments">
       <md-list-item>
