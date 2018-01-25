@@ -8,19 +8,19 @@
           <h3>{{dish.name | uppercase}}</h3>
         </md-card-title>
       </md-card-header>
-      <img md-card-image src={{dish.image}} alt={{dish.name}}>
+      <img md-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
       <md-card-content>
         <p>{{dish.description}}
         </p>
       </md-card-content>
       <md-card-actions>
-          <button md-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
-          <button md-button (click)="goBack()">BACK</button>
-          <button md-button>LIKE</button>
-          <button md-button>SHARE</button>
-          <span class="flex-spacer"></span>
-          <button md-button [routerLink]="['/dishdetail', next]"><span class="fa fa-chevron-right fa-lg"></span></button>
-        </md-card-actions>
+        <button md-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
+        <button md-button (click)="goBack()">BACK</button>
+        <button md-button>LIKE</button>
+        <button md-button>SHARE</button>
+        <span class="flex-spacer"></span>
+        <button md-button [routerLink]="['/dishdetail', next]"><span class="fa fa-chevron-right fa-lg"></span></button>
+      </md-card-actions>
     </md-card>
   </div>
 
@@ -32,7 +32,37 @@
         <p md-line>{{item.rating}} stars</p>
         <p md-line>-- {{item.author}} {{item.date | date}}</p>
       </md-list-item>
+      <md-list-item>
+        <p md-line>{{commentForm.value.comment}}</p>
+        <p md-line>{{commentForm.value.rating}} stars</p>
+        <p md-line>-- {{commentForm.value.author}}</p>
+      </md-list-item>
     </md-list>
+
+    <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <p>
+        <md-input-container class="half-width" dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+          <input mdInput formControlName="author" placeholder="Author Name" type="text" required>
+          <md-hint>
+            <span [hidden]="!(formErrors.author)">
+                    {{formErrors.author}}</span>
+          </md-hint>
+        </md-input-container>
+      </p>
+      <p>
+        <md-slider formControlName="rating" min="1" max="5" thumbLabel tickInterval="1" value="5"></md-slider>
+      </p>
+      <p>
+        <md-input-container class="full-width" dividerColor="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+          <textarea mdInput formControlName="comment" placeholder="Your comment" rows=12 cols="30"></textarea>
+          <md-hint>
+            <span [hidden]="!(formErrors.comment)">
+                    {{formErrors.comment}}</span>
+          </md-hint>
+        </md-input-container>
+      </p>
+      <button type="submit" md-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+    </form>
   </div>
 </div>
 <div [hidden]="dish">
