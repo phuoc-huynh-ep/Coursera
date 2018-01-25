@@ -1,5 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+
 import { Dish } from '../shared/dish';
+import { DrawerPage } from '../shared/drawer/drawer.page';
+
 import { DishService } from '../services/dish.service';
 
 @Component({
@@ -8,13 +11,16 @@ import { DishService } from '../services/dish.service';
     templateUrl: './menu.component.html'
     // styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent extends DrawerPage implements OnInit {
     dishes: Dish[];
 
     errMess: string;
 
     constructor(private dishService: DishService,
-        @Inject('BaseURL') private BaseURL) { }
+        private changeDetectorRef: ChangeDetectorRef,
+        @Inject('BaseURL') private BaseURL) {
+        super(changeDetectorRef);
+    }
 
     ngOnInit() {
         this.dishService.getDishes()
