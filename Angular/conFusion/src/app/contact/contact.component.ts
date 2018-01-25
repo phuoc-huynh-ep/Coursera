@@ -26,6 +26,9 @@ export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  isSubmitting = false;
+  submittedFeedback;
+  submitErrMess: string;
   contactType = ContactType;
   expand = 'active => *';
 
@@ -101,10 +104,23 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.feedback = this.feedbackForm.value;
-    this.feedbackService.submitFeedback(this.feedback)
-      .subscribe(feedback => {this.expand = 'active => *'});
 
-    console.log(this.feedback);
+    this.isSubmitting = true;
+
+    this.feedbackService.submitFeedback(this.feedback)
+      .subscribe(feedback => {
+        // Feedback was submitted successfully. Show the submission to the user.
+        this.isSubmitting = false; this.submittedFeedback = feedback; setTimeout(() => {
+          // Hide the submission results and show again the original form after 5 seconds.
+          this.submittedFeedback = null;
+        }, 5000);
+      },
+      errmess => {
+        // An error occurred during submission. Show it do the user.
+        this.isSubmitting = false;
+        this.submitErrMess = errmess;
+      });
+
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
