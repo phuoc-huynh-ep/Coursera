@@ -10,6 +10,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { ReservationPage } from '../pages/reservation/reservation';
 
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -54,8 +55,9 @@ export class MyApp {
   }
 
   openReserve() {
-
     let modal = this.modalCtrl.create(ReservationPage);
     modal.present();
   }
+
+
 }
