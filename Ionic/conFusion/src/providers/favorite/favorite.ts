@@ -29,6 +29,7 @@ export class FavoriteProvider {
   }
 
   addFavorite(id: number): boolean {
+
     if (!this.isFavorite(id)) {
       this.favorites.push(id);
       this.storage.set('favorites', this.favorites);
@@ -38,8 +39,6 @@ export class FavoriteProvider {
         text: 'Dish ' + id + ' added as a favorite successfully'
       });
     }
-
-
     console.log('favorites', this.favorites);
     return true;
   }

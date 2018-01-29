@@ -14,6 +14,8 @@
 
 
 <ion-content padding>
+  <p>Do not have an account? then</p>
+  <button ion-button clear (click)="openRegister()">Register</button>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <ion-item>
       <ion-label floating>Username</ion-label>
@@ -28,5 +30,6 @@
       <ion-checkbox color="primary" formControlName="remember" checked="true"></ion-checkbox>
     </ion-item>
     <button ion-button type="submit" [disabled]="!loginForm.valid">Login</button>
+
   </form>
 </ion-content>
