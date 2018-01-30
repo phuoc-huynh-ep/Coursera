@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { TNSFontIconService } from 'nativescript-ngx-fonticon';
 import * as Email from 'nativescript-email';
+import * as TNSPhone from 'nativescript-phone';
 
 import { DrawerPage } from '../shared/drawer/drawer.page';
 
@@ -24,7 +25,6 @@ export class ContactComponent extends DrawerPage implements OnInit {
     }
 
     sendEmail() {
-
         Email.available()
             .then((avail: boolean) => {
                 if (avail) {
@@ -40,4 +40,7 @@ export class ContactComponent extends DrawerPage implements OnInit {
 
     }
 
+    callRestaurant() {
+        TNSPhone.dial('2125551212', true);
+    }
 }
