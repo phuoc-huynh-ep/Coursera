@@ -1,11 +1,18 @@
 import { Component, OnInit, Inject, ChangeDetectorRef, ViewContainerRef } from '@angular/core';
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 import { TextField } from 'ui/text-field';
+import { DatePipe } from '@angular/common';
 import { Switch } from 'ui/switch';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Animation, AnimationDefinition } from "ui/animation";
+import { View } from "ui/core/view";
+import { Page } from "ui/page";
+import * as enums from "ui/enums";
 
 import { DrawerPage } from '../shared/drawer/drawer.page';
 import { ReservationModalComponent } from "../reservationmodal/reservationmodal.component";
+
+import { ReservationService } from '../services/reservation.service';
 
 @Component({
     selector: 'app-reservation',
@@ -15,11 +22,17 @@ import { ReservationModalComponent } from "../reservationmodal/reservationmodal.
 export class ReservationComponent extends DrawerPage implements OnInit {
 
     reservation: FormGroup;
+    showResult: boolean = false;
+
+    cardForm: View;
+    cardView: View;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         private modalService: ModalDialogService,
-        private vcRef: ViewContainerRef) {
+        private vcRef: ViewContainerRef,
+        private page: Page,
+        private reservationService: ReservationService) {
         super(changeDetectorRef);
 
         this.reservation = this.formBuilder.group({
@@ -76,6 +89,35 @@ export class ReservationComponent extends DrawerPage implements OnInit {
     }
 
     onSubmit() {
-        console.log(JSON.stringify(this.reservation.value));
+        // console.log(JSON.stringify(this.reservation.value));
+        this.reservationService.addReservation(this.reservation.value);
+        this.animateRevervation();
+    }
+
+    animateRevervation() {
+        this.cardForm = <View>this.page.getViewById<View>("cardForm");
+        this.cardView = <View>this.page.getViewById<View>("cardView");
+        this.cardForm.animate({
+            scale: { x: 1, y: 1 },
+            translate: { x: 0, y: 0 },
+            opacity: 0,
+            duration: 3000,
+            curve: enums.AnimationCurve.easeIn
+        }).then(() => {
+            this.showResult = true;
+            this.cardView.animate({
+                scale: { x: 1, y: 1 },
+                translate: { x: 0, y: 0 },
+                opacity: 1,
+                duration: 3000,
+                curve: enums.AnimationCurve.easeIn
+            }).then(() => {
+                console.log("Animation finished.");
+            }).catch((e) => {
+                console.log(e.message);
+            });
+        }).catch((e) => {
+            console.log(e.message);
+        });
     }
 }

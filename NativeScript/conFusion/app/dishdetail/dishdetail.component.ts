@@ -182,7 +182,7 @@ export class DishdetailComponent implements OnInit {
       scale: { x: 1, y: 1 },
       translate: { x: 0, y: 0 },
       opacity: 1,
-      duration: 500,
+      duration: 4000,
       curve: enums.AnimationCurve.easeIn
     };
     definitions.push(a1);
@@ -190,7 +190,7 @@ export class DishdetailComponent implements OnInit {
     let a2: AnimationDefinition = {
       target: this.cardLayout,
       backgroundColor: new Color("#ffffff"),
-      duration: 500,
+      duration: 4000,
       curve: enums.AnimationCurve.easeIn
     };
     definitions.push(a2);
