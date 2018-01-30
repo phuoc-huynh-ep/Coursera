@@ -17,8 +17,8 @@
                 </GridLayout>
             </StackLayout>
         </StackLayout>
-        <Label row="1" height="40" class="p-10 m-t-10 h3" text="Comments"></Label>
         <ListView id="commentList" row="2" height="300" [items]="dish.comments" class="list-group p-10" [visibility]="showComments ? 'visible' : 'collapsed'">
+            <Label row="1" height="40" class="p-10 m-t-10 h3" text="Comments"></Label>
             <ng-template let-comment="item">
                 <StackLayout class="list-group-item">
                     <Label class="list-group-item-heading" [text]="comment.comment" textWrap="true"></Label>
