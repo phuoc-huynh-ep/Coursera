@@ -7,7 +7,7 @@ import { CouchbaseService } from '../services/couchbase.service';
 @Injectable()
 export class ReservationService {
 
-    reservations: Array<number>;
+    reservations: any;
     docId: string = "reservations";
 
     constructor(private couchbaseService: CouchbaseService) {
@@ -21,7 +21,7 @@ export class ReservationService {
         }
     }
 
-    addReservation(revservation: number): boolean {
+    addReservation(revservation: any): boolean {
         this.reservations.push(revservation);
         this.couchbaseService.updateDocument(this.docId, { "reservations": this.reservations });
         let doc = this.couchbaseService.getDocument(this.docId);

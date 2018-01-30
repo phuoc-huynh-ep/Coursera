@@ -11,6 +11,7 @@ import * as enums from "ui/enums";
 
 import { DrawerPage } from '../shared/drawer/drawer.page';
 import { ReservationModalComponent } from "../reservationmodal/reservationmodal.component";
+import { CouchbaseService } from '../services/couchbase.service';
 
 import { ReservationService } from '../services/reservation.service';
 
@@ -23,6 +24,8 @@ export class ReservationComponent extends DrawerPage implements OnInit {
 
     reservation: FormGroup;
     showResult: boolean = false;
+    reservations: any;
+    docId: string = "reservations";
 
     cardForm: View;
     cardView: View;
@@ -32,7 +35,8 @@ export class ReservationComponent extends DrawerPage implements OnInit {
         private modalService: ModalDialogService,
         private vcRef: ViewContainerRef,
         private page: Page,
-        private reservationService: ReservationService) {
+        private reservationService: ReservationService,
+        private couchbaseService: CouchbaseService) {
         super(changeDetectorRef);
 
         this.reservation = this.formBuilder.group({
@@ -40,6 +44,13 @@ export class ReservationComponent extends DrawerPage implements OnInit {
             smoking: false,
             dateTime: ['', Validators.required]
         });
+
+        let doc = this.couchbaseService.getDocument(this.docId);
+        if (doc == null) {
+            this.couchbaseService.createDocument({ "reservations": [] }, this.docId);
+        } else {
+            this.reservations = doc.reservations;
+        }
     }
 
     ngOnInit() {
@@ -90,7 +101,7 @@ export class ReservationComponent extends DrawerPage implements OnInit {
 
     onSubmit() {
         // console.log(JSON.stringify(this.reservation.value));
-        this.reservationService.addReservation(this.reservation.value);
+        this.addReservation(this.reservation.value);
         this.animateRevervation();
     }
 
@@ -119,5 +130,13 @@ export class ReservationComponent extends DrawerPage implements OnInit {
         }).catch((e) => {
             console.log(e.message);
         });
+    }
+
+    addReservation(revservation: any): boolean {
+        this.reservations.push(revservation);
+        this.couchbaseService.updateDocument(this.docId, { "reservations": this.reservations });
+        let doc = this.couchbaseService.getDocument(this.docId);
+        console.log(JSON.stringify(doc));
+        return true;
     }
 }
