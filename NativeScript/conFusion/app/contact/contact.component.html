@@ -19,14 +19,16 @@
                         <Label class="body" text="Tel: +852 1234 5678" textWrap="true"></Label>
                         <Label class="body" text="Fax: +852 8765 4321" textWrap="true"></Label>
                         <Label class="body" text="Email:confusion@food.net" textWrap="true"></Label>
+                        <GridLayout orientation="horizontal" rows="*" columns="*, *" class="m-t-20">
+                            <Button row="0" col="0" [text]="('fa-phone' | fonticon) + ' Call'" class="btn btn-rounded-sm btn-outline no-border fa "></Button>
+                            <Button row="0" col="1" [text]="('fa-envelope-o' | fonticon) + ' Email'" class="btn btn-rounded-sm btn-outline no-border fa"
+                                (tap)="sendEmail()"></Button>
+                        </GridLayout>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
         </GridLayout>
-        <GridLayout orientation="horizontal" rows="*" columns="*, *" class="m-t-20">
-            <Button row="0" col="0" [text]="('fa-phone' | fonticon) + ' Call'" class="btn btn-rounded-sm btn-outline no-border fa "></Button>
-            <Button row="0" col="1" [text]="('fa-envelope-o' | fonticon) + ' Email'" class="btn btn-rounded-sm btn-outline no-border fa"
-                (tap)="sendEmail()"></Button>
-        </GridLayout>
+
     </ScrollView>
+
 </RadSideDrawer>
