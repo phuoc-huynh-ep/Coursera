@@ -4,12 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var dishRouter = require('./routes/dishRouter');
 var promoRouter = require('./routes/promoRouter');
 var leaderRouter = require('./routes/leaderRouter');
+
+// Connection URL
+const url = 'mongodb://localhost:27017/conFusion';
+
+const connect = mongoose.connect(url);
+
+connect.then(() => {
+  console.log("Connected correctly to server");
+  // const db = mongoose.connection;
+}, (err) => { console.log(err); });
 
 var app = express();
 
