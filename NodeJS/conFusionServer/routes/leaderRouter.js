@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const Leaders = require('../models/leaders');
+var authenticate = require('../authenticate');
+
 const promoRouter = express.Router();
 
 promoRouter.use(bodyParser.json());
